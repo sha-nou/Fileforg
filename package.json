@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "Njingti Shanelle",
   "license": "ISC",
-  "description": "fileforg is a powerful and easy-to-use Node.js package that helps you tidy up your files by organizing them based on their extensions. Whether you have a cluttered downloads folder, a messy desktop, or an overloaded project directory, this package can help you regain control and efficiency.",
+  "description": "fileforg is cli that helps organize your files.",
   "dependencies": {
     "util": "^0.12.5"
   },
