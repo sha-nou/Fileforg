@@ -33,6 +33,8 @@ const createFolderWithExt = async (fileTypes, dir) => {
   for (const [extension, filePaths] of Object.entries(fileTypes)) {
     const newFolder = extension.startsWith(".") ? extension.slice(1) : "noext";
     const newFolderPath = Path.join(dir, newFolder);
+    const folderPath=newFolderPath.split('/').slice(3).join('/')
+    
 
     // Ensure folder is created
     if (!existsSync(newFolderPath)) {
@@ -57,7 +59,7 @@ const createFolderWithExt = async (fileTypes, dir) => {
         if (err) {
           console.error(`Error moving file: ${file} -> ${newPath}`, err);
         } else {
-          console.log(`${fileName} moved to ${newFolderPath}`);
+          console.log(`${fileName} moved to ${folderPath}`);
         }
       });
     }
