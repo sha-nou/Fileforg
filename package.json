@@ -11,15 +11,18 @@
   "license": "ISC",
   "description": "fileforg is cli that helps organize your files.",
   "dependencies": {
+    "inquirer": "^12.3.2",
     "util": "^0.12.5"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sha-nou/Fileforg.git"
   },
   "bugs": {
     "url": "https://github.com/sha-nou/Fileforg/issues"
+  },
+  "bin": {
+    "fileforg": "index.js"
   },
   "homepage": "https://github.com/sha-nou/Fileforg#readme"
 }
