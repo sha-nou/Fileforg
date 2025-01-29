@@ -84,6 +84,7 @@ const getFilePathFromUser = async () => {
         name: "filepath",
         type: "input",
         message: "Please enter the filepath",
+        default:process.cwd()
       },
       {
         name: "confirm_filepath",

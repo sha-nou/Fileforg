@@ -4,13 +4,19 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "node index.js",
+    "install": "npm i fileforg"
   },
-  "keywords": [],
+  "keywords": [
+    "NeatFile",
+    "file-arrange",
+    "SortItOut"
+  ],
   "author": "Njingti Shanelle",
   "license": "ISC",
   "description": "fileforg is cli that helps organize your files.",
   "dependencies": {
+    "fileforg": "^1.0.0",
     "inquirer": "^12.3.2",
     "util": "^0.12.5"
   },
