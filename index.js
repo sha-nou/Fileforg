@@ -57,7 +57,7 @@ const createFolderWithExt = async (fileTypes, dir) => {
         if (err) {
           console.error(`Error moving file: ${file} -> ${newPath}`, err);
         } else {
-          console.log(`Moved: ${file} -> ${newPath}`);
+          console.log(`file moved to ${newFolderPath}`);
         }
       });
     }
@@ -65,11 +65,8 @@ const createFolderWithExt = async (fileTypes, dir) => {
 };
 
 const checkFileType = async (dir) => {
-  console.log("directory here", dir);
-
   try {
     const fileTypes = await getFileExtensions(dir);
-    console.log(fileTypes);
 
     await createFolderWithExt(fileTypes, dir);
   } catch (err) {
@@ -84,7 +81,7 @@ const getFilePathFromUser = async () => {
         name: "filepath",
         type: "input",
         message: "Please enter the filepath",
-        default:process.cwd()
+        default: process.cwd(),
       },
       {
         name: "confirm_filepath",
