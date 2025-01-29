@@ -1,15 +1,8 @@
-import { Console } from "console";
+#!/usr/bin/node
 import fs, { existsSync } from "fs";
 import Path from "path";
 import util from "util";
 import inquirer from "inquirer";
-import { fileURLToPath } from "url";
-
-// inquirer
-//   .prompt([{ name: "user_name", type: "input", message: "enter your name" }])
-//   .then((answer) => {
-//     console.log(answer.user_name);
-//   });
 
 const readdir = util.promisify(fs.readdir);
 const mkdir = util.promisify(fs.mkdir);
@@ -72,12 +65,12 @@ const createFolderWithExt = async (fileTypes, dir) => {
 };
 
 const checkFileType = async (dir) => {
-  console.log('directory here',dir);
-  
+  console.log("directory here", dir);
+
   try {
     const fileTypes = await getFileExtensions(dir);
     console.log(fileTypes);
-    
+
     await createFolderWithExt(fileTypes, dir);
   } catch (err) {
     console.error("Error:", err);
@@ -99,10 +92,9 @@ const getFilePathFromUser = async () => {
         when: (answer) => answer.filepath === true,
       },
     ])
-    .then( async(answer) => {
+    .then(async (answer) => {
       if (answer.filepath) {
-        await checkFileType(answer.filepath)
-        console.log(`Alright user wants to arrange file ${answer.filepath}`);
+        await checkFileType(answer.filepath);
       } else if (answer.confirm_filepath) {
         console.log("Ooops check again");
       } else {
@@ -117,4 +109,4 @@ const getFilePathFromUser = async () => {
     });
 };
 
-getFilePathFromUser()
+getFilePathFromUser();
