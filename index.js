@@ -2,7 +2,13 @@
 import fs, { existsSync } from "fs";
 import Path from "path";
 import util from "util";
+import readline from "node:readline"
 import inquirer from "inquirer";
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
 const readdir = util.promisify(fs.readdir);
 const mkdir = util.promisify(fs.mkdir);
@@ -15,17 +21,22 @@ async function getFileExtensions(dir) {
 
   for (const file of files) {
     const filePath = Path.join(dir, file);
-    const stats = await stat(filePath);
 
-    if (stats.isFile()) {
-      const extType = Path.extname(file).toLowerCase() || ".noext";
-      if (!fileTypes[extType]) {
-        fileTypes[extType] = [];
+    try {
+      const stats = await stat(filePath); 
+      if (stats.isFile()) {
+        const extType = Path.extname(file).toLowerCase() || ".noext";
+        if (stats.isFile()) {
+          if (!fileTypes[extType]) {
+            fileTypes[extType] = [];
+          }
+          fileTypes[extType].push(filePath);
+        }
       }
-      fileTypes[extType].push(filePath);
+    } catch {
+      console.log(`Skipping ${filePath}... Probably a broken file/symlink`);
     }
   }
-
   return fileTypes;
 }
 
@@ -77,36 +88,15 @@ const checkFileType = async (dir) => {
 };
 
 const getFilePathFromUser = async () => {
-  return inquirer
-    .prompt([
-      {
-        name: "filepath",
-        type: "input",
-        message: "Please enter the filepath",
-        default: process.cwd(),
-      },
-      {
-        name: "confirm_filepath",
-        type: "confirm",
-        message: "Is this the filePath you wish to arrange",
-        when: (answer) => answer.filepath === true,
-      },
-    ])
-    .then(async (answer) => {
-      if (answer.filepath) {
-        await checkFileType(answer.filepath);
-      } else if (answer.confirm_filepath) {
-        console.log("Ooops check again");
-      } else {
-        return inquirer.prompt([
-          {
-            name: "filepath",
-            type: "input",
-            message: "Please enter the filepath",
-          },
-        ]);
-      }
-    });
+  let filepath;
+  return rl.question('Please enter the filepath: ', async userFilepath => {
+    if (userFilepath.trim() == '') filepath = process.cwd();
+    filepath = userFilepath;
+
+    // create the different folder where files are organised
+    await checkFileType(filepath);
+    rl.close();
+  });
 };
 
 getFilePathFromUser();
